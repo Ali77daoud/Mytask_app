@@ -9,7 +9,6 @@ Widget MyItem({required Map tasks,required context,required int ind}){
             Container(
               width: double.infinity,
               height: 150,
-              // color: Colors.red,
               child: Stack(
                 children: [
                 Padding(
@@ -100,7 +99,6 @@ Widget MyItem({required Map tasks,required context,required int ind}){
                       child: Container(
                         width: double.infinity,
                         height:70,
-                        // color: Colors.red,
                         child: Text('you have to go to Gym',maxLines: 3,style: TextStyle(fontSize: 15,color:Colors.grey.shade300,overflow: TextOverflow.ellipsis),),
                       ),
                     ),
