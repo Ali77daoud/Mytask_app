@@ -51,7 +51,7 @@ class TaskCubit extends Cubit<TaskStates>{
     onCreate:(database,version)
     {
       print('databse created');
-      database.execute('CREATE TABLE task(id INTEGER PRIMARY KEY,title TEXT,date TEXT,time TEXT,status TEXT)').then((value) =>
+      database.execute('CREATE TABLE task(id INTEGER PRIMARY KEY,title TEXT,date TEXT,time TEXT,description TEXT,status TEXT)').then((value) =>
        print('table created')).catchError((error){
          print('error when creating table${error}'
          );
@@ -69,7 +69,7 @@ class TaskCubit extends Cubit<TaskStates>{
 
 Future insertToDatabase({required String title,required String date,required String time}) async{
   await database.transaction((txn) async {
-    txn.rawInsert('INSERT INTO task(title,date,time,status) VALUES("$title","$date","$time","new")').
+    txn.rawInsert('INSERT INTO task(title,date,time,description,status) VALUES("$title","$date","$time","ANY THING","new")').
     then((value) 
     {
       print('$value inserted suc');

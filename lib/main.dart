@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:test/pages/launcher.dart';
 import 'bloc/bloc_observe.dart';
 import 'layout/bottom_navigation_bar.dart';
 
@@ -22,7 +23,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
-      home:  BottomBar(),
+      home:  MyTask(),
       debugShowCheckedModeBanner: false,
     );
   }

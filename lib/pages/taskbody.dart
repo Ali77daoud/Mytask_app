@@ -13,7 +13,8 @@ class TaskBody extends StatelessWidget {
     return BlocConsumer<TaskCubit,TaskStates>(
       listener: (context,state){},
       builder:(context,state){
-        return ListView.separated(
+        return TaskCubit.get(context).tasks.isEmpty?Container(child: Center(child: Text('Empty')),): 
+        ListView.separated(
           itemBuilder: (context,index)=>MyItem(tasks:TaskCubit.get(context).tasks[index],context: context,ind: index), 
           separatorBuilder:(context,index)=>Divider(thickness: 2,) , 
           itemCount: TaskCubit.get(context).tasks.length,
