@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:test/bloc/tasks_bloc/task_cubit.dart';
 
-Widget MyItem({required Map tasks,required context,required int ind}){
+Widget MyItem({required Map tasks,required context,required int ind,required List<bool> ifopened}){
   return Padding(
         padding: const EdgeInsets.all(5.0),
         child: Column(
@@ -15,7 +15,7 @@ Widget MyItem({required Map tasks,required context,required int ind}){
                   padding: const EdgeInsets.only(left: 60,top: 10,bottom: 10,right: 10),
                   child: InkWell(
                     onTap: (){
-                      TaskCubit.get(context).opendetailscontainer(ind);
+                      TaskCubit.get(context).opendetailscontainer(ind,ifopened);
                     },
                     child: Container(
                       width: double.infinity,
@@ -56,9 +56,14 @@ Widget MyItem({required Map tasks,required context,required int ind}){
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.end,
                             children: [
-                              IconButton(
+                              tasks['status']=='arch'?IconButton(
+                                onPressed:(){
+                                  TaskCubit.get(context).updatedatabase(status: 'new', id: tasks['id']);
+                                },
+                                icon: Icon(Icons.alarm_on_rounded,size: 30,color: Colors.grey.shade300,))
+                              :IconButton(
                                 onPressed: (){
-                  
+                                  TaskCubit.get(context).updatedatabase(status: 'arch', id: tasks['id']);
                                 },
                                 icon: Icon(Icons.archive,size: 30,color: Colors.grey.shade300,))
                             ],
@@ -80,7 +85,7 @@ Widget MyItem({required Map tasks,required context,required int ind}){
               ],
               ),
             ),
-            TaskCubit.get(context).ifopened[ind]==true?
+            ifopened[ind]==true?
             Padding(
               padding: const EdgeInsets.only(left: 10,right: 5),
               child: Container(

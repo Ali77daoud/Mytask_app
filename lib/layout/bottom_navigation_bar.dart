@@ -59,113 +59,116 @@ class BottomBar extends StatelessWidget {
             ],
           ),
           
-          floatingActionButton: FloatingActionButton(
-            foregroundColor: Colors.grey.shade300,
-            backgroundColor: Color.fromRGBO(0, 102, 102,1),
-            onPressed: (){
-              if (c.ifshown){
-                if(formkey.currentState!.validate()){
-                  c.insertToDatabase(title: titleco.text, date: dateco.text, time: timeco.text);
+          floatingActionButton: Padding(
+            padding: const EdgeInsets.only(bottom: 20),
+            child: FloatingActionButton(
+              foregroundColor: Colors.grey.shade300,
+              backgroundColor: Color.fromRGBO(0, 102, 102,1),
+              onPressed: (){
+                if (c.ifshown){
+                  if(formkey.currentState!.validate()){
+                    c.insertToDatabase(title: titleco.text, date: dateco.text, time: timeco.text);
+                  }
                 }
-              }
-              else{
-              scaffoldkey.currentState!.showBottomSheet(
-                (context) => Container(
-                  color: Colors.grey[200],
-                  child: Padding(
-                    padding: const EdgeInsets.all(20.0),
-                    child: Form(
-                      key:formkey,
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          DefualTextFormFeild(
-                            controller:titleco,input_type:type,label:l,prifixicon:Icon(Icons.task_alt,color: Color.fromRGBO(0, 102, 102,1),),
-                            validate: (value){
-                              if(value.isEmpty){
-                                return "PLZ insert the title";
+                else{
+                scaffoldkey.currentState!.showBottomSheet(
+                  (context) => Container(
+                    color: Colors.grey[200],
+                    child: Padding(
+                      padding: const EdgeInsets.all(20.0),
+                      child: Form(
+                        key:formkey,
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            DefualTextFormFeild(
+                              controller:titleco,input_type:type,label:l,prifixicon:Icon(Icons.task_alt,color: Color.fromRGBO(0, 102, 102,1),),
+                              validate: (value){
+                                if(value.isEmpty){
+                                  return "PLZ insert the title";
+                                }
+                              },
+                              ontab: (){
+                                print('ontab');
                               }
-                            },
-                            ontab: (){
-                              print('ontab');
-                            }
-                             ),
-                          SizedBox(height: 10,),
-                          DefualTextFormFeild(controller: timeco, input_type: TextInputType.none, 
-                          validate: (value){
-                             if(value.isEmpty){
-                                return "PLZ insert the time";
-                              }
-                          },
-                           label: 'Task Time', prifixicon:  Icon(Icons.watch_later_outlined,color: Color.fromRGBO(0, 102, 102,1),),
-                           ontab: (){
-                             showTimePicker(
-                               context: context,
-                               initialTime: TimeOfDay.now(),
-                               builder:(context, child) => Theme(
-                              data: ThemeData().copyWith(
-                                colorScheme: ColorScheme.highContrastDark(
-                                  primary: Color.fromRGBO(0, 102, 102,1),
-                                  onBackground: Colors.white,
-                                  onPrimary: Colors.grey,
-                                  surface: Colors.grey,
-                                  onSurface: Colors.black,
-                                ),
-                              ),
-                              child: child!),
-                               ).then((value){
-                                 timeco.text=value!.format(context).toString();
-                                 print(value.format(context));
-                                 }
-                                 );
-                           }),
-                           SizedBox(height: 10,),
-                           DefualTextFormFeild(controller: dateco, input_type: TextInputType.none,
+                               ),
+                            SizedBox(height: 10,),
+                            DefualTextFormFeild(controller: timeco, input_type: TextInputType.none, 
                             validate: (value){
                                if(value.isEmpty){
-                                return "PLZ insert the date";
-                              }
+                                  return "PLZ insert the time";
+                                }
                             },
-                             label: 'Task Date', prifixicon: Icon(Icons.date_range_outlined,color:Color.fromRGBO(0, 102, 102,1),),
-                            ontab:()
-                            {
-                              showDatePicker(
-                                context: context,
-                                initialDate: DateTime.now(), 
-                                firstDate:DateTime(2020), 
-                                lastDate: DateTime(2024),
-                                builder: (context, child) => Theme(
-                                  data: ThemeData().copyWith(
-                                    colorScheme: ColorScheme.dark(
-                                    primary:Color.fromRGBO(0, 102, 102,1),
-                                    onPrimary:Colors.grey,
-                                    surface: Color.fromRGBO(0, 102, 102,1),
+                             label: 'Task Time', prifixicon:  Icon(Icons.watch_later_outlined,color: Color.fromRGBO(0, 102, 102,1),),
+                             ontab: (){
+                               showTimePicker(
+                                 context: context,
+                                 initialTime: TimeOfDay.now(),
+                                 builder:(context, child) => Theme(
+                                data: ThemeData().copyWith(
+                                  colorScheme: ColorScheme.highContrastDark(
+                                    primary: Color.fromRGBO(0, 102, 102,1),
+                                    onBackground: Colors.white,
+                                    onPrimary: Colors.grey,
+                                    surface: Colors.grey,
                                     onSurface: Colors.black,
-                                ),
-                                    dialogBackgroundColor: Colors.grey.shade400,
                                   ),
+                                ),
                                 child: child!),
-                            ).then((value) {
-                              dateco.text = (DateFormat.yMMMd().format(value!)).toString();
-                            })
-                            ;}
-                           ),
-                        ],
+                                 ).then((value){
+                                   timeco.text=value!.format(context).toString();
+                                   print(value.format(context));
+                                   }
+                                   );
+                             }),
+                             SizedBox(height: 10,),
+                             DefualTextFormFeild(controller: dateco, input_type: TextInputType.none,
+                              validate: (value){
+                                 if(value.isEmpty){
+                                  return "PLZ insert the date";
+                                }
+                              },
+                               label: 'Task Date', prifixicon: Icon(Icons.date_range_outlined,color:Color.fromRGBO(0, 102, 102,1),),
+                              ontab:()
+                              {
+                                showDatePicker(
+                                  context: context,
+                                  initialDate: DateTime.now(), 
+                                  firstDate:DateTime(2020), 
+                                  lastDate: DateTime(2024),
+                                  builder: (context, child) => Theme(
+                                    data: ThemeData().copyWith(
+                                      colorScheme: ColorScheme.dark(
+                                      primary:Color.fromRGBO(0, 102, 102,1),
+                                      onPrimary:Colors.grey,
+                                      surface: Color.fromRGBO(0, 102, 102,1),
+                                      onSurface: Colors.black,
+                                  ),
+                                      dialogBackgroundColor: Colors.grey.shade400,
+                                    ),
+                                  child: child!),
+                              ).then((value) {
+                                dateco.text = (DateFormat.yMMMd().format(value!)).toString();
+                              })
+                              ;}
+                             ),
+                          ],
+                        ),
                       ),
                     ),
                   ),
-                ),
-                ).closed.then((value) { 
-                  c.closebottomsheet() ;
-                });
+                  ).closed.then((value) { 
+                    c.closebottomsheet() ;
+                  });
 
-               c.openbottomsheet();
-                
-                }
-            },
-            child: Icon(c.ic),
-          
-            ),
+                 c.openbottomsheet();
+                  
+                  }
+              },
+              child: Icon(c.ic),
+            
+              ),
+          ),
           
         );
         },

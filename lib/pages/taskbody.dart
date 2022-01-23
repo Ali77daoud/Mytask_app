@@ -15,7 +15,7 @@ class TaskBody extends StatelessWidget {
       builder:(context,state){
         return TaskCubit.get(context).tasks.isEmpty?Container(child: Center(child: Text('Empty')),): 
         ListView.separated(
-          itemBuilder: (context,index)=>MyItem(tasks:TaskCubit.get(context).tasks[index],context: context,ind: index), 
+          itemBuilder: (context,index)=>MyItem(tasks:TaskCubit.get(context).tasks[index],context: context,ind: index,ifopened:TaskCubit.get(context).ifopenedtasks), 
           separatorBuilder:(context,index)=>Divider(thickness: 2,) , 
           itemCount: TaskCubit.get(context).tasks.length,
           );

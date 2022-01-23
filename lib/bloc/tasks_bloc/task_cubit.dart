@@ -11,7 +11,11 @@ class TaskCubit extends Cubit<TaskStates>{
   static TaskCubit get(context)=>BlocProvider.of(context);
   int i = 0;
   List<Map> tasks=[];
-  List<bool> ifopened = [];
+  List<Map> done=[];
+  List<Map> arch=[];
+  List<bool> ifopenedtasks = [];
+  List<bool> ifopeneddone = [];
+  List<bool> ifopenedarch = [];
   bool ifshown = false;
   IconData ic = Icons.edit;
   late Database database;
@@ -38,7 +42,7 @@ class TaskCubit extends Cubit<TaskStates>{
     ic=Icons.edit;
     emit(CloseBottomsheet());
   }
-  void opendetailscontainer(int index){
+  void opendetailscontainer(int index,List<bool> ifopened){
     ifopened[index] = !ifopened[index];
     emit(ShowDetails());
   }
@@ -85,21 +89,33 @@ Future insertToDatabase({required String title,required String date,required Str
 void updatedatabase({required String status,required int id})async{
   database.rawUpdate(
     'UPDATE task SET status = ? WHERE id=?',
-    ['$status',id],
+    [status,id],
   ).then((value) {
+    getDataFromDB(database);
     emit(UbdateDB());
   });
 }
 
 void getDataFromDB(database){
+  tasks=[];
+  arch=[];
+  done=[];
   emit(ShowProgressInicator());
   database.rawQuery('SELECT * FROM task').then((value){
-    tasks = value;
-    print('get value');
-    for(int i=0;i<tasks.length;i++){
-      ifopened.add(false);
-    }
-    print(ifopened.length);
+    value.forEach((element){
+      if(element['status']=='new'){
+        tasks.add(element);
+        ifopenedtasks.add(false);
+        }
+      else if (element['status']=='arch'){
+        arch.add(element);
+        ifopenedarch.add(false);
+        }
+      else if (element['status']=='done'){
+        done.add(element);
+        ifopeneddone.add(false);
+        }
+    });
     emit(GetFromDB());
   });
   
