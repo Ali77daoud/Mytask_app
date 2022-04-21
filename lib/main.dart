@@ -1,3 +1,4 @@
+import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:test/pages/launcher.dart';
@@ -8,6 +9,18 @@ import 'layout/bottom_navigation_bar.dart';
 void main() {
   BlocOverrides.runZoned(
     () {
+      AwesomeNotifications().initialize(
+      null,
+      [NotificationChannel(
+        channelKey: 'basic_channel', 
+        channelName: 'Basic_notification', 
+        defaultColor: Colors.teal,
+        importance: NotificationImportance.High,
+        channelShowBadge: true,
+        channelDescription: '',
+        )
+      ],
+  );
       runApp(const MyApp());
     },
     blocObserver: MyBlocObserver(),

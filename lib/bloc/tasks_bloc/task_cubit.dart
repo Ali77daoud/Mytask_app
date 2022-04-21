@@ -1,3 +1,4 @@
+import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sqflite/sqflite.dart';
@@ -22,7 +23,7 @@ class TaskCubit extends Cubit<TaskStates>{
   List<Widget> screens = [
     TaskBody(),
     DonePage(),
-    ArchivePage(),
+    const ArchivePage(),
   ];
  
 
@@ -45,6 +46,9 @@ class TaskCubit extends Cubit<TaskStates>{
   void opendetailscontainer(int index,List<bool> ifopened){
     ifopened[index] = !ifopened[index];
     emit(ShowDetails());
+  }
+  void navpop(){
+    emit(Navpop());
   }
 
   void createDatabase()async{
@@ -96,6 +100,16 @@ void updatedatabase({required String status,required int id})async{
   });
 }
 
+void deletefromdatabase({required int id})async{
+  database.rawDelete(
+    'DELETE FROM task WHERE id=?',
+    [id],
+  ).then((value) {
+    getDataFromDB(database);
+    emit(DeletefromDB());
+  });
+}
+
 void getDataFromDB(database){
   tasks=[];
   arch=[];
@@ -119,6 +133,23 @@ void getDataFromDB(database){
     emit(GetFromDB());
   });
   
+}
+
+Future<void> createNotifications({required TimeOfDay time,required int id}) async{
+  await AwesomeNotifications().createNotification( 
+    content: NotificationContent(
+      id: id,
+      channelKey: 'basic_channel',
+      title: '${Emojis.time_alarm_clock} ',
+      body: 'You have a task',
+    ),
+    schedule: NotificationCalendar(
+      hour: time.hour,
+      minute: time.minute,
+      repeats: false,
+      allowWhileIdle: true
+    )
+    );
 }
 
 }

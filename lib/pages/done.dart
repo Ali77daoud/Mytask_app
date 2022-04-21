@@ -1,12 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:test/bloc/tasks_bloc/task_cubit.dart';
+import 'package:test/bloc/tasks_bloc/tasks_states.dart';
+import 'package:test/widget/myitem.dart';
 
 class DonePage extends StatelessWidget {
-  const DonePage({ Key? key }) : super(key: key);
-
+  
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Center(child: Text('Done')),
+    return BlocConsumer<TaskCubit,TaskStates>(
+      listener: (context,state){},
+      builder:(context,state){
+        return TaskCubit.get(context).done.isEmpty?Container(child: Center(child: Text('Empty')),): 
+        ListView.separated(
+          itemBuilder: (context,index)=>MyItem(tasks:TaskCubit.get(context).done[index],context: context,ind: index,ifopened:TaskCubit.get(context).ifopeneddone), 
+          separatorBuilder:(context,index)=>Divider(thickness: 2,) , 
+          itemCount: TaskCubit.get(context).done.length,
+          );
+      },
+      
     );
   }
 }

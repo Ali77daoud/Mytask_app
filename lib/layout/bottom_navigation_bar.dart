@@ -1,3 +1,4 @@
+import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
@@ -68,6 +69,7 @@ class BottomBar extends StatelessWidget {
                 if (c.ifshown){
                   if(formkey.currentState!.validate()){
                     c.insertToDatabase(title: titleco.text, date: dateco.text, time: timeco.text);
+                   
                   }
                 }
                 else{
@@ -109,8 +111,8 @@ class BottomBar extends StatelessWidget {
                                   colorScheme: ColorScheme.highContrastDark(
                                     primary: Color.fromRGBO(0, 102, 102,1),
                                     onBackground: Colors.white,
-                                    onPrimary: Colors.grey,
-                                    surface: Colors.grey,
+                                    onPrimary: Colors.grey.shade300,
+                                    surface: Colors.grey.shade300,
                                     onSurface: Colors.black,
                                   ),
                                 ),
@@ -140,7 +142,7 @@ class BottomBar extends StatelessWidget {
                                     data: ThemeData().copyWith(
                                       colorScheme: ColorScheme.dark(
                                       primary:Color.fromRGBO(0, 102, 102,1),
-                                      onPrimary:Colors.grey,
+                                      onPrimary:Colors.grey.shade300,
                                       surface: Color.fromRGBO(0, 102, 102,1),
                                       onSurface: Colors.black,
                                   ),

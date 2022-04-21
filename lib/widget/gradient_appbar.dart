@@ -15,11 +15,11 @@ class GradientAppBar extends StatelessWidget {
     });
   @override
   Widget build(BuildContext context) {
-    return new Container(
-        padding: new EdgeInsets.only(
+    return  Container(
+        padding:  EdgeInsets.only(
           top: MediaQuery.of(context).padding.top
         ),
-        child: new Padding(
+        child: Padding(
           padding: const EdgeInsets.only(
             left: 30.0,
             top: 20.0,
